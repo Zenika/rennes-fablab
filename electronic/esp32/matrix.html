@@ -1,0 +1,217 @@
+<style>
+    body {
+        background-color: black;
+    }
+    .horizontal {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      padding-top: 30px;
+      gap: 20px;
+    }
+    .form > div {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+    span {
+      padding-left: 15px;
+      color: white;
+    }
+    .matrix {
+        width: auto;
+        display: grid;
+        grid-template-columns: repeat(8, 17px);
+        gap: 10px;
+        margin-bottom: 40px;
+    }
+    .pixel {
+        width: 15px;
+        height: 15px;
+        background-color: red;
+        border: 2px solid black;
+    }
+
+    #code {
+      color: white;
+    }
+</style>
+<div class="horizontal">
+  <div class="matrix">
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+  </div>
+  <div class="form">
+    <div>
+        <input type="color" id="colorPicker" /> <span id="currentColor">#000000</span>
+    </div>
+    <div>
+      <input type="checkbox" id="zigzag" /> <span>ZigZag</span>
+    </div>
+  </div>
+</div>
+<code id="code"></code>
+
+<script>
+    function updateColor(color, sat){
+        const col = hexToRgb(color);
+        const gray = col.r * 0.3086 + col.g * 0.6094 + col.b * 0.0820;
+
+        col.g = Math.round(Math.min(255, Math.max(0, col.g * sat + gray * (1-sat))));
+        col.r = Math.round(Math.min(255, Math.max(0, col.r * sat + gray * (1-sat))));
+        col.b = Math.round(Math.min(255, Math.max(0, col.b * sat + gray * (1-sat))));
+
+        return rgbToHex(col.r,col.g,col.b);
+
+    }
+
+    function componentToHex(c) {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
+
+    function rgbToHex(r, g, b) {
+        return componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
+
+    function hexToRgb(hex) {
+        return {
+            r: (hex & 0xff0000) >> 16,
+            g: (hex & 0x00ff00) >> 8,
+            b: (hex & 0x0000ff)
+        };
+    }
+
+    const pixels = document.getElementsByClassName('pixel');
+    let currentPixel;
+    const mailIcon = [
+        0xb62523, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0xe4c03e,
+        0xb62523, 0xb62523, 0x000000, 0x000000, 0x000000, 0x000000, 0xe4c03e, 0xe4c03e,
+        0xb62523, 0xb62523, 0xd94538, 0x000000, 0x000000, 0xd94538, 0xe4c03e, 0xe4c03e,
+        0xb62523, 0xb62523, 0xd94538, 0xd94538, 0xd94538, 0xd94538, 0xe4c03e, 0xe4c03e,
+        0x638ff6, 0x638ff6, 0x000000, 0xd94538, 0xd94538, 0x000000, 0x7fb96a, 0x7fb96a,
+        0x638ff6, 0x638ff6, 0x000000, 0x000000, 0x000000, 0x000000, 0x7fb96a, 0x7fb96a,
+        0x638ff6, 0x638ff6, 0x000000, 0x000000, 0x000000, 0x000000, 0x7fb96a, 0x7fb96a,
+        0x638ff6, 0x638ff6, 0x000000, 0x000000, 0x000000, 0x000000, 0x7fb96a, 0x7fb96a,
+    ];
+
+    function render() {
+      mailIcon.forEach((pixel, index) => pixels.item(index).style.backgroundColor = `rgb(${(pixel & 0xff0000) >> 16}, ${(pixel  & 0x00ff00) >> 8}, ${(pixel & 0x0000ff)})`);
+      const arrays = [];
+      for (let i = 0; i < mailIcon.length; i += 8) {
+        arrays.push(mailIcon.slice(i, i + 8));
+      }
+      const zigzag = document.getElementById('zigzag').checked;
+      console.log(zigzag);
+      document.getElementById('code').innerText = `${arrays.map((array, i) => (i % 2 === 1 || !zigzag ? array: array.reverse()).map((int) => `0x${updateColor(int, 1.5)}`).join(', ')).join(',\n')}`
+    }
+
+    document.getElementById('colorPicker').addEventListener('input', () => {
+        if (currentPixel) {
+            mailIcon[currentPixel.index] = parseInt(document.getElementById('colorPicker').value.slice(1), 16);
+            render();
+        }
+        document.getElementById('currentColor').innerText = document.getElementById('colorPicker').value;
+    });
+
+    document.getElementById('zigzag').addEventListener('input', () => {
+        render();
+    });
+
+    for (let i = 0; i < pixels.length; i++) {
+      const pixel = pixels.item(i);
+      pixel.index = i;
+      pixel.addEventListener('click', (e) => {
+        if (currentPixel) {
+          currentPixel.style.borderColor = 'black';
+        }
+        currentPixel = pixel;
+        currentPixel.style.borderColor = 'red';
+        document.getElementById('colorPicker').value = `#${mailIcon[i].toString(16)}`;
+        document.getElementById('currentColor').innerText = `#${mailIcon[i].toString(16)}`;
+      });
+
+      pixel.addEventListener('contextmenu', (ev) => {
+        ev.preventDefault();
+        if (currentPixel) {
+          mailIcon[i] = mailIcon[currentPixel.index];
+          render();
+        }
+      });
+
+      render();
+    }</script>
