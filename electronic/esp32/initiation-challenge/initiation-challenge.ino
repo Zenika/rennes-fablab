@@ -7,9 +7,8 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_NeoMatrix.h>
 #include <Adafruit_NeoPixel.h>
+#include "secret.h"
 
-#define SSID "Zenika"
-#define PWD ""
 #define LED_MATRIX_PIN 2
 #define MATRIX_H 8
 #define MATRIX_W 8
@@ -90,19 +89,15 @@ void initMatrix() {
 }
 
 void handlePingRequest() {
-  if (server.header("User-Agent").length() == 0) {
     Serial.println("Request accepted");
     server.send(200, "text/html", "OK");
     String name = server.arg("name");
     fixdrawRGBBitmap(0, 0, victoryImage, 8, 8);
     delay(4000);
+    Serial.print(name);
+    Serial.println(" win");
     writeText(name + " Win!!");
     delay(500);
-  } else {
-    server.send(400, "text/html", "Cheater");
-    Serial.print("Request refused - ");
-    Serial.println(server.header("User-Agent"));
-  }
 }
 
 void handleNotFound() {
@@ -112,9 +107,6 @@ void handleNotFound() {
 void initWebServer() {
   server.on("/ping", handlePingRequest);
   server.onNotFound(handleNotFound); 
-  const char * headerkeys[] = {"User-Agent"} ;
-  size_t headerkeyssize = sizeof(headerkeys) / sizeof(char*);
-  server.collectHeaders(headerkeys, headerkeyssize);
   server.begin();
 }
 
