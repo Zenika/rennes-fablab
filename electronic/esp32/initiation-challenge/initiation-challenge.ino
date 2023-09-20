@@ -2,6 +2,10 @@
 // Challenger must program an esp32 to send request to this ESP32's IP address
 // Request must be a GET /ping?name=nickname
 // Security check if request has not been sent from a browser (checking if user agent is present)
+// you must define file secret.h with
+// #define SSID ""
+// #define PWD ""
+
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Adafruit_GFX.h>
