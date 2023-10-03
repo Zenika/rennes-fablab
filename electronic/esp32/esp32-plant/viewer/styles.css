@@ -1,0 +1,61 @@
+body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito Sans', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+
+}
+
+.background {
+  z-index: -1;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+ h1 {
+   font-size: 3em;
+   color: white;
+ }
+
+.tournesol {
+  height: 80vh;
+}
+
+span {
+  font-size: 1.5em;
+  color: white;
+}
+
+#moisture {
+  position: absolute;
+  left: 30vw;
+  top: 70vh;
+}
+
+#temperature {
+  position: absolute;
+  left: 27vw;
+  top: 20vh;
+}
+
+#humidity {
+  position: absolute;
+  right: 27vw;
+  top: 50vh;
+}
+
+#brightness {
+  position: absolute;
+  right: 25vw;
+  top: 25vh;
+}
