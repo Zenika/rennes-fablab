@@ -44,12 +44,6 @@ span {
 
 #temperature {
   position: absolute;
-  left: 27vw;
-  top: 20vh;
-}
-
-#humidity {
-  position: absolute;
   right: 27vw;
   top: 50vh;
 }
@@ -58,4 +52,10 @@ span {
   position: absolute;
   right: 25vw;
   top: 25vh;
+}
+
+#wind {
+  position: absolute;
+  left: 27vw;
+  top: 20vh;
 }

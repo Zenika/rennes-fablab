@@ -23,6 +23,11 @@ app.get('/', (req: Request, res: Response) => {
 app.post('/', (req: Request, res: Response) => {
   logRequest(req);
   res.send('OK');
+});
+
+app.post('/sensor', (req: Request, res: Response) => {
+  logRequest(req);
+  res.send('OK');
   websockets.forEach((ws: WebSocket) => ws.send(JSON.stringify(req.body)));
 });
 
