@@ -59,3 +59,9 @@ span {
   left: 27vw;
   top: 20vh;
 }
+
+#rain {
+  position: absolute;
+  left: 25vw;
+  top: 40vh;
+}
