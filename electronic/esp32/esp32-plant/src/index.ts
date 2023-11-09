@@ -4,6 +4,15 @@ import WebSocket, { WebSocketServer } from 'ws';
 let websockets: WebSocket[] = [];
 const app = express();
 app.use(json());
+
+app.use((err: unknown, req: Request, res: Response, next: () => void) => {
+  if (err instanceof SyntaxError && (err as any).status === 400 && 'body' in err) {
+    console.error(err);
+    return res.status(400).send({ status: 404, message: err.message });
+  }
+  next();
+});
+
 const port = 3000;
 
 function logRequest(req: Request) {
